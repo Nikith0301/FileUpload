@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Display a URL Input Field</h1>
+
+<p>The <strong>input type="url"</strong> is used for input fields that should contain a URL address:</p>
+
+<!-- <form action="http://localhost:3001/things/form" method="POST" id="imageUrlForm">
+  <label for="homepage">Add your homepage:</label>
+  <input type="url" id="homepage" name="homepage">
+  <input type="submit" value="Submit">
+</form> -->
+
+<form id="imageUrlForm" action="http://localhost:3001/things/form" method="POST">
+  <label for="imageUrl">Image URL:</label>
+  <input type="url" id="imageUrl" name="imageUrl" required>
+  <input type="submit" value="Convert to Base64">
+</form>
+
+
+<div id="image-container"></div>
+<!-- <form action="http://localhost:3001/names" method="POST">
+    <label for="fname">First name:</label><br>
+    <input type="text" id="fname" name="fname"><br>
+    <label for="lname">Last name:</label><br>
+    <input type="text" id="lname" name="lname"><br><br>
+    <input type="submit" value="Submit">
+  </form> -->
+  <div id="image-container"></div>
+  <script>
+    const imageUrlForm = document.getElementById('imageUrlForm');
+ const imageContainer = document.getElementById('image-container');
+ 
+ imageUrlForm.addEventListener('submit', (event) => {
+   event.preventDefault(); // Prevent default form submission
+ 
+   const imageUrl = document.getElementById('imageUrlForm').value;
+ console.log(imageUrl);
+   // Optional: Basic URL validation (improve based on your needs)
+   if (!isValidImageUrl(imageUrl)) {
+     alert('Please enter a valid image URL');
+     return;
+   }
+ 
+   const loadingIndicator = document.createElement('div');
+   loadingIndicator.textContent = 'Fetching image...';
+   imageContainer.appendChild(loadingIndicator);
+ 
+   fetch(imageUrlForm.action, {
+     method: 'POST',
+     body: new FormData(imageUrlForm) // Send form data (including the URL)
+   })
+  //  .then(console.log('46'))
+   .then(response => response.text() )
+   .then(base64Image => {
+     loadingIndicator.remove(); // Remove loading indicator
+ 
+     // Create an image element and set its src to the base64 string
+     const img = document.createElement('img');
+     img.src = `data:image/png;base64,${base64Image}`;
+     img.alt = 'Converted Image';
+ 
+     imageContainer.appendChild(img);
+   })
+   .catch(error => {
+     console.error('Error fetching image:', error);
+     const errorText = document.createElement('p');
+     errorText.textContent = 'Error retrieving image. Please try again later.';
+     imageContainer.appendChild(errorText);
+   });
+ });
+ 
+ // Optional function for URL validation (replace with your implementation)
+ function isValidImageUrl(url) {
+   // Implement your URL validation logic here
+   // You can check for valid protocols (https, http), file extensions (png, jpg, etc.)
+   // and basic URL format using regular expressions or other techniques
+   return true; // Replace with actual validation logic
+ }
+ 
+   </script>
+</body>
+</html>
+

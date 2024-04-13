@@ -1,0 +1,7 @@
+File from: [/src/uploads/dice_png.{jpg,JPG,jpeg,JPEG,png,svg,gif}]
+
+File to: [../uploadsdice_png.{jpg,JPG,jpeg,JPEG,png,svg,gif}]
+
+Compression algorithm: [-]
+
+Description: File does not exist!
